@@ -60,4 +60,54 @@ router.post('/', isLoggedIn, upload2.none(), async (req, res, next) => {
   }
 });
 
+router.delete('/:twitId', isLoggedIn, async (req, res, next) => {
+  try {
+    console.log(req.user);
+    const post = await Post.findOne({where: {id:req.params.twitId}});
+
+    if(post) {
+      post.destroy();
+      res.status(200).send('success');
+    } else {
+      res.status(404).send('포스트를 찾을 수 없습니다.');
+    }
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+router.post('/:twitId/like', isLoggedIn, async (req, res, next) => {
+  try {
+    const post = await Post.findOne({where: {id:req.params.twitId}});
+
+    if(post) {
+      await post.addLiker(req.user.id);
+      res.status(200).send('success');
+    } else {
+      res.status(404).send('포스트를 찾을 수 없습니다.');
+    }
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+router.delete('/:twitId/like', isLoggedIn, async (req, res, next) => {
+  try {
+    const post = await Post.findOne({where: {id:req.params.twitId}});
+
+    if(post) {
+      await post.removeLiker(req.user.id);
+      res.status(200).send('success');
+    } else {
+      res.status(404).send('포스트를 찾을 수 없습니다.');
+    }
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+
 module.exports = router;

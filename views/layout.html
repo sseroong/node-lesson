@@ -24,6 +24,7 @@
           <input id="my-id" type="hidden" value="{{user.id}}">
           <a id="my-profile" href="/profile" class="btn">내 프로필</a>
           <a id="logout" href="/auth/logout" class="btn">로그아웃</a>
+          <a id="gomain" href="/" class="btn">피드보러가기</a>
         {% else %}
           <form id="login-form" action="/auth/login" method="post">
             <div class="input-group">
@@ -42,7 +43,7 @@
         </div>
         <footer>
           Made by&nbsp;
-          <a href="https://www.zerocho.com" target="_blank">ZeroCho</a>
+          <a href="https://sseroong.tistory.com" target="_blank">sseroong</a>
         </footer>
       </div>
       {% block content %}
